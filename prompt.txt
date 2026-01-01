@@ -1,0 +1,11 @@
+Build a desktop app for Linux and MacOS with dotnet & Avalonia. Use MVVM Community Toolkit and SQLite. Apply SukiUI theme.
+The app provides gamification of the reading process: 
+
+1. The user is allowed to create cards with: book photo, book title, pages amount, completion progress bar or review stars
+2. The user could update the count of pages they have read until the book is done.
+3. When the book is completed, there should be an ability to rate it (1,2,3,4, or 5 stars)
+
+There should be 
+1. a view to display a list of book cards in historical order (ordered by recency)
+2. a view to create/update a card
+3. a view to show: total books read, total pages read, count of pages read in this month, 

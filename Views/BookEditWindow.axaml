@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="ReadStat.Views.BookEditWindow"
+        Title="Edit Book" Width="400" Height="300">
+  <StackPanel Margin="12" Spacing="8">
+    <TextBlock Text="Title" />
+    <TextBox Text="{Binding Title, Mode=TwoWay}" />
+
+    <TextBlock Text="Total Pages" />
+    <NumericUpDown Minimum="0" Maximum="10000" Value="{Binding PagesTotal, Mode=TwoWay}" />
+
+    <TextBlock Text="Pages Read" />
+    <NumericUpDown Minimum="0" Maximum="10000" Value="{Binding PagesRead, Mode=TwoWay}" />
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button Content="Save" Click="OnSave" />
+      <Button Content="Cancel" Click="OnCancel" />
+    </StackPanel>
+  </StackPanel>
+</Window>

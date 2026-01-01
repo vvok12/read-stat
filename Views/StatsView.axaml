@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="ReadStat.Views.StatsView">
+  <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="6" Padding="8">
+    <StackPanel>
+      <TextBlock Text="Statistics" FontWeight="Bold" Margin="0 0 0 8" />
+      <StackPanel Orientation="Horizontal" Spacing="12">
+        <StackPanel>
+          <TextBlock Text="Total books read" />
+          <TextBlock Text="{Binding TotalBooksRead}" FontWeight="Bold" />
+        </StackPanel>
+        <StackPanel>
+          <TextBlock Text="Total pages read" />
+          <TextBlock Text="{Binding TotalPagesRead}" FontWeight="Bold" />
+        </StackPanel>
+        <StackPanel>
+          <TextBlock Text="Pages this month" />
+          <TextBlock Text="{Binding PagesReadThisMonth}" FontWeight="Bold" />
+        </StackPanel>
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</UserControl>
