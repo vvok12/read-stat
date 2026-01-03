@@ -24,27 +24,7 @@
 
       <ScrollViewer Grid.Column="0" Grid.Row="1">
         <ItemsControl ItemsSource="{Binding Books}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="6" Padding="8" Margin="4">
-                <StackPanel Orientation="Vertical">
-                  <TextBlock Text="{Binding Title}" FontWeight="Bold" />
-                  <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                    <TextBlock Text="Pages:" />
-                    <TextBlock Text="{Binding PagesRead}" />
-                    <TextBlock Text="/" />
-                    <TextBlock Text="{Binding PagesTotal}" />
-                    <ProgressBar Minimum="0" Maximum="1" Value="{Binding Progress}" Width="120" Height="12"/>
-                  </StackPanel>
-                  <StackPanel Orientation="Horizontal" Spacing="4">
-                    <Button Content="+1" Command="{Binding ((vm:MainViewModel)DataContext).IncrementPagesCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="1" />
-                    <Button Content="+5" Command="{Binding ((vm:MainViewModel)DataContext).IncrementPagesCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="5" />
-                    <Button Content="Rate 5" Command="{Binding ((vm:MainViewModel)DataContext).RateCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="5" />
-                  </StackPanel>
-                </StackPanel>
-              </Border>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
+          <ItemsControl.ItemTemplate/>
         </ItemsControl>
       </ScrollViewer>
     </Grid>
