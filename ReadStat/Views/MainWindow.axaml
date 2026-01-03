@@ -22,7 +22,7 @@
     <Grid ColumnDefinitions="2*,*" RowDefinitions="Auto,*">
       <views:StatsView Grid.Column="1" />
 
-      <ScrollViewer Grid.Column="0" Grid.Row="1">
+      <ScrollViewer Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
         <ListBox 
           ItemsSource="{Binding Books}" 
           SelectedItem="{Binding Selected, Mode=TwoWay}"
