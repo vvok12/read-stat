@@ -23,9 +23,10 @@
       <views:StatsView Grid.Column="1" />
 
       <ScrollViewer Grid.Column="0" Grid.Row="1">
-        <ItemsControl ItemsSource="{Binding Books}">
-          <ItemsControl.ItemTemplate/>
-        </ItemsControl>
+        <ListBox 
+          ItemsSource="{Binding Books}" 
+          SelectedItem="{Binding Selected, Mode=TwoWay}"
+          SelectionMode="Single"/>
       </ScrollViewer>
     </Grid>
   </DockPanel>
