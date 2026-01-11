@@ -41,15 +41,6 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Add(Window? owner)
-    {
-        var vm = new BookViewModel(new Book());
-        var win = new BookEditWindow { DataContext = vm };
-        win.Icon = owner?.Icon;
-        win.ShowDialog(owner).ContinueWith(_ => Refresh());
-    }
-
-    [RelayCommand]
     private void Edit(Window? owner)
     {
         if (Selected == null) return;
@@ -62,7 +53,11 @@ public partial class MainViewModel : ObservableObject
         };
         
         var vm = new BookViewModel(model);
-        var win = new BookEditWindow { DataContext = vm };
+        var win = new BookEditWindow
+        {
+            DataContext = vm, 
+            Icon = owner?.Icon
+        };
         win.ShowDialog(owner).ContinueWith(_ => Refresh());
     }
 
