@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReadStat.ViewModels;
 using ReadStat.Data;
+using ReadStat.ViewModels.Books;
 
 namespace ReadStat.Views;
 

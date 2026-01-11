@@ -7,15 +7,16 @@ using System.Linq;
 using ReadStat.Views;
 using Avalonia.Controls;
 using System;
+using ReadStat.ViewModels.Books;
 
 namespace ReadStat.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    public ObservableCollection<BookViewModel> Books { get; } = new();
+    public ObservableCollection<IBookListItem> Books { get; } = new();
 
-    private BookViewModel? _selected;
-    public BookViewModel? Selected
+    private IBookListItem? _selected;
+    public IBookListItem? Selected
     {
         get => _selected;
         set => SetProperty(ref _selected, value);
@@ -30,6 +31,7 @@ public partial class MainViewModel : ObservableObject
     public void Refresh()
     {
         Books.Clear();
+        Books.Add(new AddBookBtnViewModel());
         var all = Database.GetAllBooks();
         foreach (var b in all)
             Books.Add(new BookViewModel(b));
@@ -51,7 +53,14 @@ public partial class MainViewModel : ObservableObject
     private void Edit(Window? owner)
     {
         if (Selected == null) return;
-        var model = Selected.ToModel();
+
+        var model = Selected switch
+        {
+            BookViewModel bvm => bvm.ToModel(),
+            AddBookBtnViewModel => new Book(),
+            _ => throw new NotImplementedException()
+        };
+        
         var vm = new BookViewModel(model);
         var win = new BookEditWindow { DataContext = vm };
         win.ShowDialog(owner).ContinueWith(_ => Refresh());
@@ -60,20 +69,20 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void Delete()
     {
-        if (Selected == null) return;
-        Database.Delete(Selected.Id);
+        if (Selected is not BookViewModel bvm) return;
+        Database.Delete(bvm.Id);
         Refresh();
     }
 
     [RelayCommand]
     private void IncrementPages(int pages)
     {
-        if (Selected == null) return;
-        Selected.PagesRead = Math.Min(Selected.PagesTotal, Selected.PagesRead + pages);
-        var model = Selected.ToModel();
-        if (Selected.PagesRead >= Selected.PagesTotal)
+        if (Selected is not BookViewModel bvm) return;
+        bvm.PagesRead = Math.Min(bvm.PagesTotal, bvm.PagesRead + pages);
+        var model = bvm.ToModel();
+        if (bvm.PagesRead >= bvm.PagesTotal)
         {
-            Selected.Completed = true;
+            bvm.Completed = true;
         }
         Database.AddOrUpdate(model);
         Refresh();
@@ -82,15 +91,15 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void Rate(int rating)
     {
-        if (Selected == null) return;
-        Selected.Rating = rating;
-        Selected.Completed = true;
-        Database.AddOrUpdate(Selected.ToModel());
+        if (Selected is not BookViewModel bvm) return;
+        bvm.Rating = rating;
+        bvm.Completed = true;
+        Database.AddOrUpdate(bvm.ToModel());
         Refresh();
     }
 
-    public int TotalBooksRead => Books.Count(b => b.Completed);
-    public int TotalPagesRead => Books.Sum(b => b.PagesRead);
+    public int TotalBooksRead => Books.OfType<BookViewModel>().Count(b => b.Completed);
+    public int TotalPagesRead => Books.OfType<BookViewModel>().Sum(b => b.PagesRead);
     public int PagesReadThisMonth
     {
         get

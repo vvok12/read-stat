@@ -1,9 +1,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using ReadStat.Models;
 
-namespace ReadStat.ViewModels;
+namespace ReadStat.ViewModels.Books;
 
-public class BookViewModel : ObservableObject
+public class BookViewModel : ObservableObject, IBookListItem
 {
     private readonly Book _model;
 

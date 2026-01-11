@@ -1,8 +1,6 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 
-namespace ReadStat.Views;
+namespace ReadStat.Views.Books;
 
 public partial class BookView : UserControl
 {

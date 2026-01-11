@@ -22,4 +22,11 @@
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Books\BookView.axaml.cs">
+      <DependentUpon>BookView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

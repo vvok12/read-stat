@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:ReadStat.ViewModels"
         xmlns:views="clr-namespace:ReadStat.Views"
+        xmlns:books="clr-namespace:ReadStat.ViewModels.Books"
         x:Class="ReadStat.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Title="ReadStat">
@@ -27,7 +28,7 @@
           DoubleTapped="InputElement_OnDoubleTapped"
           ItemsSource="{Binding Books}" 
           SelectedItem="{Binding Selected, Mode=TwoWay}"
-          SelectionMode="Single"/>
+          SelectionMode="Single" />
       </ScrollViewer>
     </Grid>
   </DockPanel>
