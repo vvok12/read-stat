@@ -12,11 +12,13 @@
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                 <Image 
-                    MaxWidth="300" 
-                    MaxHeight="300" 
+                    Width="300" 
+                    Height="300"
                     Margin="20"
-                    Stretch="Uniform"
-                    Source="avares://ReadStat/Assets/defaultBookCover.jpg"   />
+                    Stretch="UniformToFill"
+                    Source="{Binding Cover, 
+                        TargetNullValue={StaticResource DefaultBookCover}}" 
+                    />
                 <TextBlock 
                     Margin="20"
                     Text="{Binding Title}" 

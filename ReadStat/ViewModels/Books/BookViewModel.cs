@@ -1,4 +1,9 @@
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
+using ReadStat.Data;
 using ReadStat.Models;
 
 namespace ReadStat.ViewModels.Books;
@@ -25,6 +30,8 @@ public class BookViewModel : ObservableObject, IBookListItem
             }
         }
     }
+
+    public Bitmap? Cover => LoadBookCover(); 
 
     public int PagesTotal
     {
@@ -59,4 +66,20 @@ public class BookViewModel : ObservableObject, IBookListItem
     public double Progress => PagesTotal > 0 ? (double)PagesRead / PagesTotal : 0.0;
 
     public Book ToModel() => _model;
+    
+    private Bitmap? LoadBookCover()
+    {
+        if (ImagePath == null)
+        {
+            return null;
+        }
+        
+        var path = Path.Combine(FileSystem.ImageFolder,ImagePath); 
+        if (File.Exists(path))
+        {
+            return new Bitmap(File.OpenRead(path));
+        }
+        
+        return null;
+    }
 }

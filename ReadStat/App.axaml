@@ -11,4 +11,8 @@
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
+    
+    <Application.Resources>
+        <Bitmap x:Key="DefaultBookCover">Assets/defaultBookCover.jpg</Bitmap>
+    </Application.Resources>
 </Application>
