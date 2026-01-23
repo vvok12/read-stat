@@ -74,7 +74,7 @@ public class BookViewModel : ObservableObject, IBookListItem
             return null;
         }
         
-        var path = Path.Combine(FileSystem.ImageFolder,ImagePath); 
+        var path = Path.Combine(AppContext.BaseDirectory, FileSystem.ImageFolder, ImagePath); 
         if (File.Exists(path))
         {
             return new Bitmap(File.OpenRead(path));
