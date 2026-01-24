@@ -7,6 +7,20 @@
         xmlns:books="clr-namespace:ReadStat.ViewModels.Books"
         Title="Edit Book" Width="400" Height="300">
   <StackPanel Margin="12" Spacing="8">
+    <Image 
+      Width="300" 
+      Height="300"
+      Margin="20"
+      Stretch="UniformToFill"
+      Source="{Binding Cover, 
+        TargetNullValue={StaticResource DefaultBookCover}}" 
+    />
+    <Button 
+      Content="Change Cover" 
+      Command="{Binding ChangeCoverCommand}"
+      CommandParameter="{Binding $self}"
+      HorizontalAlignment="Center"/>
+    
     <TextBlock Text="Title" />
     <TextBox Text="{Binding Title, Mode=TwoWay}" />
 

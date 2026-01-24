@@ -20,6 +20,7 @@ public partial class App : Application
     {
         var dbPath = Path.Combine(AppContext.BaseDirectory, "readstat.db");
         Database.Initialize(dbPath);
+        FileSystem.Initialize();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

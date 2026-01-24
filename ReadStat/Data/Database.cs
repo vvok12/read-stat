@@ -25,7 +25,7 @@ public static class Database
                 Title TEXT NOT NULL,
                 PagesTotal INTEGER,
                 PagesRead INTEGER,
-                ImagePath TEXT,
+                CoverId TEXT,
                 Completed INTEGER,
                 Rating INTEGER,
                 CreatedAt TEXT

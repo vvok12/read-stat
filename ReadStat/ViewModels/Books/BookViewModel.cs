@@ -1,14 +1,16 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ReadStat.Data;
 using ReadStat.Models;
 
 namespace ReadStat.ViewModels.Books;
 
-public class BookViewModel : ObservableObject, IBookListItem
+public partial class BookViewModel : ObservableObject, IBookListItem
 {
     private readonly Book _model;
 
@@ -17,6 +19,17 @@ public class BookViewModel : ObservableObject, IBookListItem
         _model = model;
     }
 
+    public string? CoverId
+    {
+        get => _model.CoverId;
+        set
+        {
+            _model.CoverId = value; 
+            OnPropertyChanged(nameof(CoverId)); 
+            OnPropertyChanged(nameof(Cover));
+        }
+    }
+    
     public int Id => _model.Id;
     public string Title
     {
@@ -45,12 +58,6 @@ public class BookViewModel : ObservableObject, IBookListItem
         set { _model.PagesRead = value; OnPropertyChanged(nameof(PagesRead)); OnPropertyChanged(nameof(Progress)); }
     }
 
-    public string? ImagePath
-    {
-        get => _model.ImagePath;
-        set { _model.ImagePath = value; OnPropertyChanged(nameof(ImagePath)); }
-    }
-
     public bool Completed
     {
         get => _model.Completed;
@@ -66,20 +73,55 @@ public class BookViewModel : ObservableObject, IBookListItem
     public double Progress => PagesTotal > 0 ? (double)PagesRead / PagesTotal : 0.0;
 
     public Book ToModel() => _model;
+
+    [RelayCommand]
+    private async void ChangeCover(Button btn)
+    {
+        var topLevel = TopLevel.GetTopLevel(btn);
+        
+        if (topLevel?.StorageProvider is not { } sp)
+        {
+            return;
+        }
+        
+        var files = await sp.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            AllowMultiple = false,
+            FileTypeFilter = [FilePickerFileTypes.ImageAll]
+        });
+
+        if (files.Count < 1)
+        {
+            return;
+        }
+        
+        var file = files[0];
+        var generatedCoverId = "0";
+        using (var bmp = new Bitmap(await file.OpenReadAsync()))
+        {
+            bmp.Save(Path.Combine(AppContext.BaseDirectory, FileSystem.ImageFolder, $"{generatedCoverId}.bmp"));
+        }
+
+        if (btn.DataContext is BookViewModel model)
+        {
+            model.CoverId = generatedCoverId;
+        }
+    }
     
     private Bitmap? LoadBookCover()
     {
-        if (ImagePath == null)
+        if (string.IsNullOrEmpty(CoverId))
+        {
+            return null;
+        }
+
+        var path = Path.Combine(AppContext.BaseDirectory, FileSystem.ImageFolder, $"{CoverId}.bmp");
+        if (!File.Exists(path))
         {
             return null;
         }
         
-        var path = Path.Combine(AppContext.BaseDirectory, FileSystem.ImageFolder, ImagePath); 
-        if (File.Exists(path))
-        {
-            return new Bitmap(File.OpenRead(path));
-        }
-        
-        return null;
+        var memoryStream = new MemoryStream(File.ReadAllBytes(path));
+        return new Bitmap(memoryStream);
     }
 }
