@@ -44,7 +44,7 @@ public partial class BookViewModel : ObservableObject, IBookListItem
         }
     }
 
-    public Bitmap? Cover => LoadBookCover(); 
+    public Bitmap? Cover => FileSystem.LoadBookCover(CoverId); 
 
     public int PagesTotal
     {
@@ -74,54 +74,4 @@ public partial class BookViewModel : ObservableObject, IBookListItem
 
     public Book ToModel() => _model;
 
-    [RelayCommand]
-    private async void ChangeCover(Button btn)
-    {
-        var topLevel = TopLevel.GetTopLevel(btn);
-        
-        if (topLevel?.StorageProvider is not { } sp)
-        {
-            return;
-        }
-        
-        var files = await sp.OpenFilePickerAsync(new FilePickerOpenOptions
-        {
-            AllowMultiple = false,
-            FileTypeFilter = [FilePickerFileTypes.ImageAll]
-        });
-
-        if (files.Count < 1)
-        {
-            return;
-        }
-        
-        var file = files[0];
-        var generatedCoverId = Guid.NewGuid().ToString();
-        using (var bmp = new Bitmap(await file.OpenReadAsync()))
-        {
-            bmp.Save(Path.Combine(AppContext.BaseDirectory, FileSystem.ImageFolder, $"{generatedCoverId}.bmp"));
-        }
-
-        if (btn.DataContext is BookViewModel model)
-        {
-            model.CoverId = generatedCoverId;
-        }
-    }
-    
-    private Bitmap? LoadBookCover()
-    {
-        if (string.IsNullOrEmpty(CoverId))
-        {
-            return null;
-        }
-
-        var path = Path.Combine(AppContext.BaseDirectory, FileSystem.ImageFolder, $"{CoverId}.bmp");
-        if (!File.Exists(path))
-        {
-            return null;
-        }
-        
-        var memoryStream = new MemoryStream(File.ReadAllBytes(path));
-        return new Bitmap(memoryStream);
-    }
 }

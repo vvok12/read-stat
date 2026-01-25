@@ -18,12 +18,4 @@ public partial class MainWindow : Window
     {
         AvaloniaXamlLoader.Load(this);
     }
-
-    private void InputElement_OnDoubleTapped(object? sender, TappedEventArgs e)
-    {
-        if (DataContext is MainViewModel mainViewModel)
-        {
-            mainViewModel.EditCommand.Execute(this);
-        }
-    }
 }

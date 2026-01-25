@@ -6,6 +6,7 @@ using ReadStat.ViewModels;
 using ReadStat.Views;
 using System.IO;
 using System;
+using ReadStat.Models;
 
 namespace ReadStat;
 
@@ -24,13 +25,18 @@ public partial class App : Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            var mainVm = new MainViewModel();
+            var mainVm = new MainWindowViewModel();
             desktop.MainWindow = new MainWindow
             {
                 DataContext = mainVm
             };
+            SetDataContext = (dc) => mainVm.CurrentPage = dc;
+            
+            SetDataContext.Invoke(new EditBookViewModel(new Book()));
         }
 
         base.OnFrameworkInitializationCompleted();
     }
+
+    public static Action<object> SetDataContext = null!;
 }

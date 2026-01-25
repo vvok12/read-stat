@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ReadStat.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:MainViewModel"
+             x:Class="ReadStat.Views.MainView">
+  
+    <Grid ColumnDefinitions="2*,*" RowDefinitions="Auto,*">
+        <ScrollViewer Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+            <ListBox
+                DoubleTapped="OnDoubleTapped"
+                ItemsSource="{Binding Books}" 
+                SelectedItem="{Binding Selected, Mode=TwoWay}"
+                SelectionMode="Single" />
+        </ScrollViewer>
+    </Grid>
+</UserControl>

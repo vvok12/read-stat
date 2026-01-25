@@ -41,7 +41,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Edit(Window? owner)
+    private void Edit(ContentControl? owner)
     {
         if (Selected == null) return;
 
@@ -51,14 +51,18 @@ public partial class MainViewModel : ObservableObject
             AddBookBtnViewModel => new Book(),
             _ => throw new NotImplementedException()
         };
-        
+
+        App.SetDataContext(new EditBookViewModel(model));
+
+        /*
         var vm = new BookViewModel(model);
         var win = new BookEditWindow
         {
-            DataContext = vm, 
+            DataContext = vm,
             Icon = owner?.Icon
         };
         win.ShowDialog(owner).ContinueWith(_ => Refresh());
+        */
     }
 
     [RelayCommand]
