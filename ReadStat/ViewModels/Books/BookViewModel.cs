@@ -96,7 +96,7 @@ public partial class BookViewModel : ObservableObject, IBookListItem
         }
         
         var file = files[0];
-        var generatedCoverId = "0";
+        var generatedCoverId = Guid.NewGuid().ToString();
         using (var bmp = new Bitmap(await file.OpenReadAsync()))
         {
             bmp.Save(Path.Combine(AppContext.BaseDirectory, FileSystem.ImageFolder, $"{generatedCoverId}.bmp"));
