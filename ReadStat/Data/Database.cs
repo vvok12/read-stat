@@ -56,13 +56,13 @@ public static class Database
         conn.Open();
         if (b.Id == 0)
         {
-            var sql = "INSERT INTO Books (Title, PagesTotal, PagesRead, ImagePath, Completed, Rating, CreatedAt) VALUES (@Title,@PagesTotal,@PagesRead,@ImagePath,@Completed,@Rating,@CreatedAt); SELECT last_insert_rowid();";
+            var sql = "INSERT INTO Books (Title, PagesTotal, PagesRead, CoverId, Completed, Rating, CreatedAt) VALUES (@Title,@PagesTotal,@PagesRead,@CoverId,@Completed,@Rating,@CreatedAt); SELECT last_insert_rowid();";
             var id = conn.ExecuteScalar<long>(sql, b);
             return (int)id;
         }
         else
         {
-            var sql = "UPDATE Books SET Title=@Title, PagesTotal=@PagesTotal, PagesRead=@PagesRead, ImagePath=@ImagePath, Completed=@Completed, Rating=@Rating WHERE Id=@Id";
+            var sql = "UPDATE Books SET Title=@Title, PagesTotal=@PagesTotal, PagesRead=@PagesRead, CoverId=@CoverId, Completed=@Completed, Rating=@Rating WHERE Id=@Id";
             conn.Execute(sql, b);
             return b.Id;
         }
