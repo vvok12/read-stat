@@ -4,9 +4,9 @@ using ReadStat.Data;
 using ReadStat.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
-using ReadStat.Views;
 using Avalonia.Controls;
 using System;
+using ReadStat.Services;
 using ReadStat.ViewModels.Books;
 
 namespace ReadStat.ViewModels;
@@ -18,8 +18,13 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private IBookListItem? _selected;
 
-    public MainViewModel()
+    private readonly NavigationService _navigationService;
+
+    public MainViewModel(NavigationService navigationService)
     {
+        ArgumentNullException.ThrowIfNull(navigationService);
+        
+        _navigationService = navigationService;
         Refresh();
     }
 
@@ -48,17 +53,7 @@ public partial class MainViewModel : ObservableObject
             _ => throw new NotImplementedException()
         };
 
-        App.SetDataContext(new EditBookViewModel(model));
-
-        /*
-        var vm = new BookViewModel(model);
-        var win = new BookEditWindow
-        {
-            DataContext = vm,
-            Icon = owner?.Icon
-        };
-        win.ShowDialog(owner).ContinueWith(_ => Refresh());
-        */
+        _navigationService.EditBook(model);
     }
 
     [RelayCommand]

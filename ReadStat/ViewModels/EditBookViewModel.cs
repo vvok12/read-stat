@@ -7,30 +7,41 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ReadStat.Data;
 using ReadStat.Models;
+using ReadStat.Services;
 using ReadStat.ViewModels.Books;
 
 namespace ReadStat.ViewModels;
 
 public partial class EditBookViewModel: ObservableObject
 {
-    public EditBookViewModel(Book model)
+    private readonly NavigationService _nav;
+
+    public EditBookViewModel(NavigationService navigationService)
     {
-        _model = model;
+        ArgumentNullException.ThrowIfNull(navigationService);
+        _nav =  navigationService;
     }
 
-    private Book _model { get; set; }
+    public EditBookViewModel WithModel(Book model)
+    {
+        ArgumentNullException.ThrowIfNull(model);
+        _model = model;
+        return this;
+    }
+
+    private Book? _model;
     
     [RelayCommand]
     private void Save()
     {
         Database.AddOrUpdate(_model);
-        App.SetDataContext?.Invoke(new MainViewModel());
+        _nav.MoveToMain();
     }
 
     [RelayCommand]
     private void Cancel()
     {
-        App.SetDataContext?.Invoke(new MainViewModel());
+        _nav.MoveToMain();
     }
     
     public Bitmap? Cover => FileSystem.LoadBookCover(_model.CoverId);
@@ -39,11 +50,9 @@ public partial class EditBookViewModel: ObservableObject
         get => _model.Title;
         set
         {
-            if (_model.Title != value)
-            {
-                _model.Title = value;
-                OnPropertyChanged(nameof(Title));
-            }
+            if (_model.Title == value) return;
+            _model.Title = value;
+            OnPropertyChanged();
         } 
     }
     public int PagesTotal 
@@ -52,7 +61,7 @@ public partial class EditBookViewModel: ObservableObject
         set
         {
             _model.PagesTotal = value; 
-            OnPropertyChanged(nameof(PagesTotal)); 
+            OnPropertyChanged(); 
         } 
     }
     public int PagesRead
@@ -61,7 +70,7 @@ public partial class EditBookViewModel: ObservableObject
         set
         {
             _model.PagesRead = value;
-            OnPropertyChanged(nameof(PagesRead));
+            OnPropertyChanged();
         }
     }
 
