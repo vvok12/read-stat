@@ -34,7 +34,10 @@ public partial class EditBookViewModel: ObservableObject
     [RelayCommand]
     private void Save()
     {
-        Database.AddOrUpdate(_model);
+        if (_model is not null)
+        {
+            Database.AddOrUpdate(_model);
+        }
         _nav.MoveToMain();
     }
 
@@ -44,12 +47,13 @@ public partial class EditBookViewModel: ObservableObject
         _nav.MoveToMain();
     }
     
-    public Bitmap? Cover => FileSystem.LoadBookCover(_model.CoverId);
+    public Bitmap? Cover => FileSystem.LoadBookCover(_model?.CoverId);
     public string Title 
     { 
-        get => _model.Title;
+        get => _model?.Title ?? string.Empty;
         set
         {
+            if (_model is null) return;
             if (_model.Title == value) return;
             _model.Title = value;
             OnPropertyChanged();
@@ -57,22 +61,37 @@ public partial class EditBookViewModel: ObservableObject
     }
     public int PagesTotal 
     { 
-        get => _model.PagesTotal;
+        get => _model?.PagesTotal ?? 0;
         set
         {
+            if (_model is null) return;
             _model.PagesTotal = value; 
             OnPropertyChanged(); 
         } 
     }
     public int PagesRead
     {
-        get => _model.PagesRead;
+        get => _model?.PagesRead ?? 0;
         set
         {
+            if (_model is null) return;
             _model.PagesRead = value;
             OnPropertyChanged();
         }
     }
+    
+    public string? CoverId
+    {
+        get => _model?.CoverId;
+        set
+        {
+            if (_model is null) return;
+            _model.CoverId = value; 
+            OnPropertyChanged(); 
+            OnPropertyChanged(nameof(Cover));
+        }
+    }
+
 
     [RelayCommand]
     private async void ChangeCover(Button btn)
@@ -102,7 +121,7 @@ public partial class EditBookViewModel: ObservableObject
             bmp.Save(Path.Combine(AppContext.BaseDirectory, FileSystem.ImageFolder, $"{generatedCoverId}.bmp"));
         }
 
-        if (btn.DataContext is BookViewModel model)
+        if (btn.DataContext is EditBookViewModel model)
         {
             model.CoverId = generatedCoverId;
         }

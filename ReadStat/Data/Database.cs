@@ -39,7 +39,7 @@ public static class Database
     {
         using var conn = GetConnection();
         conn.Open();
-        var items = conn.Query<Book>("SELECT * FROM Books ORDER BY CreatedAt DESC").ToList();
+        var items = conn.Query<Book>("SELECT * FROM Books ORDER BY CreatedAt DESC").AsList();
         return items;
     }
 
