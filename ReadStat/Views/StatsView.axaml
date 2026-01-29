@@ -4,10 +4,10 @@
              x:Class="ReadStat.Views.StatsView"
              x:DataType="vm:MainViewModel"
              xmlns:vm="clr-namespace:ReadStat.ViewModels">
-  <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="6" Padding="8">
+  <Border Padding="8" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" >
     <StackPanel>
       <TextBlock Text="Statistics" FontWeight="Bold" Margin="0 0 0 8" />
-      <StackPanel Orientation="Horizontal" Spacing="12">
+      <StackPanel Orientation="Vertical" Spacing="12">
         <StackPanel>
           <TextBlock Text="Total books read" />
           <TextBlock Text="{Binding TotalBooksRead}" FontWeight="Bold" />
