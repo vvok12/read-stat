@@ -1,8 +1,10 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using CommunityToolkit.Mvvm.ComponentModel;
 using ReadStat.ViewModels;
+using ReadStat.ViewModels.Books;
+using ReadStat.Views;
+using ReadStat.Views.Books;
 
 namespace ReadStat
 {
@@ -10,15 +12,14 @@ namespace ReadStat
     {
         public Control Build(object? data)
         {
-            var name = data!.GetType().FullName!.Replace("ViewModel", "View");
-            var type = Type.GetType(name);
-
-            if (type != null)
+            return data switch
             {
-                return (Control)Activator.CreateInstance(type)!;
-            }
-
-            return new TextBlock { Text = "View is not Found: " + name };
+                MainViewModel mainViewModel => new MainView(),
+                BookViewModel bookViewModel => new BookView(),
+                AddBookBtnViewModel addBookBtnViewModel => new AddBookBtnView(),
+                EditBookViewModel editBookViewModel => new EditBookView(),
+                _ => new TextBlock { Text = "View is not Found: " + data?.GetType() }
+            };
         }
 
         public bool Match(object? data)
