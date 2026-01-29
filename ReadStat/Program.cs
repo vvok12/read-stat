@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using System;
 
+[module:Dapper.DapperAot]
 namespace ReadStat;
 
 class Program
