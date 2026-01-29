@@ -4,12 +4,13 @@ namespace ReadStat.ViewModels;
 
 public class MainWindowViewModel: ObservableObject
 {
+    private object? _currentPage;
     public object? CurrentPage
     {
-        get => field;
+        get => _currentPage;
         set
         {
-            field = value;
+            _currentPage = value;
             OnPropertyChanged(nameof(CurrentPage));
         }
     }
