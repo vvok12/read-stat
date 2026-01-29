@@ -1,20 +1,19 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using ReadStat.Models;
-using System.Linq;
 
 namespace ReadStat.Data;
 
 public static class Database
 {
-    private static string _dbPath = string.Empty;
+    private static string DbPath => Path.Combine(AppContext.BaseDirectory, "db.sqlite");
 
-    public static void Initialize(string path)
+    public static void Initialize()
     {
-        _dbPath = path;
-        var folder = Path.GetDirectoryName(path);
+        var folder = Path.GetDirectoryName(DbPath);
         if (!string.IsNullOrEmpty(folder) && !Directory.Exists(folder))
             Directory.CreateDirectory(folder);
 
@@ -33,7 +32,7 @@ public static class Database
     }
 
     private static SqliteConnection GetConnection()
-        => new SqliteConnection($"Data Source={_dbPath}");
+        => new SqliteConnection($"Data Source={DbPath}");
 
     public static List<Book> GetAllBooks()
     {

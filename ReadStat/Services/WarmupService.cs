@@ -8,8 +8,7 @@ public class WarmupService
 {
     public void Run()
     {
-        var dbPath = Path.Combine(AppContext.BaseDirectory, "readstat.db");
-        Database.Initialize(dbPath);
+        Database.Initialize();
         FileSystem.Initialize();
     }
 }
