@@ -13,14 +13,10 @@ namespace ReadStat.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    public ObservableCollection<IBookListItem> Books { get; } = new();
+    public ObservableCollection<IBookListItem> Books { get; } = [];
 
+    [ObservableProperty]
     private IBookListItem? _selected;
-    public IBookListItem? Selected
-    {
-        get => _selected;
-        set => SetProperty(ref _selected, value);
-    }
 
     public MainViewModel()
     {
