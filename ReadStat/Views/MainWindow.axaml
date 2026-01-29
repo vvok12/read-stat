@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:ReadStat.ViewModels"
+        x:Class="ReadStat.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="ReadStat">
+        <ContentControl Content="{Binding CurrentPage}"/>
+</Window>
