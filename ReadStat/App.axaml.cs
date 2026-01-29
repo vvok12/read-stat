@@ -32,7 +32,7 @@ public partial class App : Application
             };
             SetDataContext = (dc) => mainVm.CurrentPage = dc;
             
-            SetDataContext.Invoke(new EditBookViewModel(new Book()));
+            SetDataContext.Invoke(new MainViewModel());
         }
 
         base.OnFrameworkInitializationCompleted();
