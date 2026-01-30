@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
@@ -8,7 +9,6 @@ using CommunityToolkit.Mvvm.Input;
 using ReadStat.Data;
 using ReadStat.Models;
 using ReadStat.Services;
-using ReadStat.ViewModels.Books;
 
 namespace ReadStat.ViewModels;
 
@@ -94,7 +94,7 @@ public partial class EditBookViewModel: ObservableObject
 
 
     [RelayCommand]
-    private async void ChangeCover(Button btn)
+    private async Task ChangeCover(Button btn)
     {
         var topLevel = TopLevel.GetTopLevel(btn);
         
