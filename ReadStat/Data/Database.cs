@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using ReadStat.Models;
@@ -40,6 +41,33 @@ public static class Database
         conn.Open();
         var items = conn.Query<Book>("SELECT * FROM Books ORDER BY CreatedAt DESC").AsList();
         return items;
+    }
+
+    public static async Task<List<Book>> GetUnfinishedBooksAsync()
+    {
+        await using var conn = GetConnection();
+        await conn.OpenAsync();
+        var items = await conn
+            .QueryAsync<Book>("SELECT * FROM Books WHERE Completed=0");
+        return items.AsList();
+    }
+
+    public static async Task<int> CountCompletedBooksAsync()
+    {
+        await using var conn = GetConnection();
+        await conn.OpenAsync();
+        var count = await conn
+            .ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Books WHERE Completed=1");
+        return count;
+    }
+
+    public static async Task<int> CountPagesReadAsync()
+    {
+        await using var conn = GetConnection();
+        await conn.OpenAsync();
+        var totalPages = await conn
+            .ExecuteScalarAsync<int>("SELECT sum(PagesRead) FROM Books");
+        return totalPages;
     }
 
     public static Book? GetBook(int id)

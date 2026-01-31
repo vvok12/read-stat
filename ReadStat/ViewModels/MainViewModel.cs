@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Controls;
 using System;
+using System.Threading.Tasks;
 using ReadStat.Services;
 using ReadStat.ViewModels.Books;
 
@@ -25,17 +26,20 @@ public partial class MainViewModel : ObservableObject
         ArgumentNullException.ThrowIfNull(navigationService);
         
         _navigationService = navigationService;
-        Refresh();
+        _ = Refresh();
     }
 
-    [RelayCommand]
-    public void Refresh()
+    private async Task Refresh()
     {
         Books.Clear();
+        var all = await Database.GetUnfinishedBooksAsync();
+        
         Books.Add(new AddBookBtnViewModel());
-        var all = Database.GetAllBooks();
         foreach (var b in all)
+        {
             Books.Add(new BookViewModel(b));
+        }
+        
         OnPropertyChanged(nameof(TotalBooksRead));
         OnPropertyChanged(nameof(TotalPagesRead));
         OnPropertyChanged(nameof(PagesReadThisMonth));
@@ -50,46 +54,22 @@ public partial class MainViewModel : ObservableObject
         {
             BookViewModel bvm => bvm.ToModel(),
             AddBookBtnViewModel => new Book(),
-            _ => throw new NotImplementedException()
+            _ => throw new InvalidOperationException("could not cast selected content")
         };
 
         _navigationService.EditBook(model);
     }
 
     [RelayCommand]
-    private void Delete()
+    private async Task Delete()
     {
         if (Selected is not BookViewModel bvm) return;
         Database.Delete(bvm.Id);
-        Refresh();
+        await Refresh();
     }
 
-    [RelayCommand]
-    private void IncrementPages(int pages)
-    {
-        if (Selected is not BookViewModel bvm) return;
-        bvm.PagesRead = Math.Min(bvm.PagesTotal, bvm.PagesRead + pages);
-        var model = bvm.ToModel();
-        if (bvm.PagesRead >= bvm.PagesTotal)
-        {
-            bvm.Completed = true;
-        }
-        Database.AddOrUpdate(model);
-        Refresh();
-    }
-
-    [RelayCommand]
-    private void Rate(int rating)
-    {
-        if (Selected is not BookViewModel bvm) return;
-        bvm.Rating = rating;
-        bvm.Completed = true;
-        Database.AddOrUpdate(bvm.ToModel());
-        Refresh();
-    }
-
-    public int TotalBooksRead => Books.OfType<BookViewModel>().Count(b => b.Completed);
-    public int TotalPagesRead => Books.OfType<BookViewModel>().Sum(b => b.PagesRead);
+    public Task<int> TotalBooksRead => Database.CountCompletedBooksAsync();
+    public Task<int> TotalPagesRead => Database.CountPagesReadAsync();
     public int PagesReadThisMonth
     {
         get

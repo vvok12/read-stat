@@ -10,11 +10,11 @@
       <StackPanel Orientation="Vertical" Spacing="12">
         <StackPanel>
           <TextBlock Text="Total books read" />
-          <TextBlock Text="{Binding TotalBooksRead}" FontWeight="Bold" />
+          <TextBlock Text="{Binding TotalBooksRead^}" FontWeight="Bold" />
         </StackPanel>
         <StackPanel>
           <TextBlock Text="Total pages read" />
-          <TextBlock Text="{Binding TotalPagesRead}" FontWeight="Bold" />
+          <TextBlock Text="{Binding TotalPagesRead^}" FontWeight="Bold" />
         </StackPanel>
         <StackPanel>
           <TextBlock Text="Pages this month" />
