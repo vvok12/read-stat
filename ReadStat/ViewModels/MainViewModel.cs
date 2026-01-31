@@ -32,7 +32,7 @@ public partial class MainViewModel : ObservableObject
     private async Task Refresh()
     {
         Books.Clear();
-        var all = await Database.GetUnfinishedBooksAsync();
+        var all = await Database.ListUnfinishedBooksAsync();
         
         Books.Add(new AddBookBtnViewModel());
         foreach (var b in all)
@@ -43,6 +43,12 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(TotalBooksRead));
         OnPropertyChanged(nameof(TotalPagesRead));
         OnPropertyChanged(nameof(PagesReadThisMonth));
+    }
+
+    [RelayCommand]
+    private void ListCompletedBooks()
+    {
+        _navigationService.MoveToCompletedBooks();
     }
 
     [RelayCommand]

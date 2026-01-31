@@ -1,6 +1,8 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using ReadStat.Models;
 using ReadStat.ViewModels;
+using ReadStat.ViewModels.Books;
 
 namespace ReadStat.Services;
 
@@ -16,6 +18,11 @@ public class NavigationService
     public void MoveToMain()
     {
         _mainWindow.CurrentPage = App.Services.GetRequiredService<MainViewModel>();
+    }
+
+    public void MoveToCompletedBooks()
+    {
+        _mainWindow.CurrentPage = App.Services.GetRequiredService<CompletedBooksViewModel>();
     }
 
     public void EditBook(Book book)

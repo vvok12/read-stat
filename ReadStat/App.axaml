@@ -1,11 +1,20 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ReadStat"
+             xmlns:vm="clr-namespace:ReadStat.ViewModels"
+             xmlns:bookVm="clr-namespace:ReadStat.ViewModels.Books"
+             xmlns:view="clr-namespace:ReadStat.Views"
+             xmlns:bookView="clr-namespace:ReadStat.Views.Books"
              x:Class="ReadStat.App"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
      <Application.DataTemplates>
-         <local:ViewLocator/>
+         <DataTemplate DataType="vm:CompletedBooksViewModel"><view:CompletedBooksView/></DataTemplate>
+         <DataTemplate DataType="vm:MainWindowViewModel"><view:MainWindow/></DataTemplate>
+         <DataTemplate DataType="vm:EditBookViewModel"><view:EditBookView/></DataTemplate>
+         <DataTemplate DataType="vm:MainViewModel"><view:MainView/></DataTemplate>
+         <DataTemplate DataType="bookVm:BookViewModel"><bookView:BookView/></DataTemplate>
+         <DataTemplate DataType="bookVm:AddBookBtnViewModel"><bookView:AddBookBtnView/></DataTemplate>
      </Application.DataTemplates>
              
     <Application.Styles>
@@ -15,4 +24,5 @@
     <Application.Resources>
         <Bitmap x:Key="DefaultBookCover">Assets/defaultBookCover.jpg</Bitmap>
     </Application.Resources>
+    
 </Application>

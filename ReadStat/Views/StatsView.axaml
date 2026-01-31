@@ -8,10 +8,12 @@
     <StackPanel>
       <TextBlock Text="Statistics" FontWeight="Bold" Margin="0 0 0 8" />
       <StackPanel Orientation="Vertical" Spacing="12">
-        <StackPanel>
-          <TextBlock Text="Total books read" />
-          <TextBlock Text="{Binding TotalBooksRead^}" FontWeight="Bold" />
-        </StackPanel>
+        <Button Command="{Binding ListCompletedBooksCommand}">
+          <StackPanel>
+            <TextBlock Text="Total books read" />
+            <TextBlock Text="{Binding TotalBooksRead^}" FontWeight="Bold" />
+          </StackPanel>
+        </Button>
         <StackPanel>
           <TextBlock Text="Total pages read" />
           <TextBlock Text="{Binding TotalPagesRead^}" FontWeight="Bold" />

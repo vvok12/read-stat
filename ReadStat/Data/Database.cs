@@ -11,7 +11,8 @@ namespace ReadStat.Data;
 public static class Database
 {
     private static string DbPath => Path.Combine(AppContext.BaseDirectory, "db.sqlite");
-
+    private static SqliteConnection GetConnection() => new SqliteConnection($"Data Source={DbPath}");
+    
     public static void Initialize()
     {
         var folder = Path.GetDirectoryName(DbPath);
@@ -32,9 +33,6 @@ public static class Database
             );");
     }
 
-    private static SqliteConnection GetConnection()
-        => new SqliteConnection($"Data Source={DbPath}");
-
     public static List<Book> GetAllBooks()
     {
         using var conn = GetConnection();
@@ -43,7 +41,16 @@ public static class Database
         return items;
     }
 
-    public static async Task<List<Book>> GetUnfinishedBooksAsync()
+    public static async Task<List<Book>> ListCompletedBooksAsync()
+    {
+        await using var conn = GetConnection();
+        await conn.OpenAsync();
+        var items = await conn
+            .QueryAsync<Book>("SELECT * FROM Books WHERE Completed=1 ORDER BY CreatedAt DESC");
+        return items.AsList();
+    }
+    
+    public static async Task<List<Book>> ListUnfinishedBooksAsync()
     {
         await using var conn = GetConnection();
         await conn.OpenAsync();
