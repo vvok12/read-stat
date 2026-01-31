@@ -48,7 +48,7 @@ public static class Database
         await using var conn = GetConnection();
         await conn.OpenAsync();
         var items = await conn
-            .QueryAsync<Book>("SELECT * FROM Books WHERE Completed=0");
+            .QueryAsync<Book>("SELECT * FROM Books WHERE Completed=0 ORDER BY CreatedAt DESC");
         return items.AsList();
     }
 
