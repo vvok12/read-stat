@@ -3,14 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using ReadStat.Data;
-using ReadStat.Models;
 using ReadStat.ViewModels.Books;
 
 namespace ReadStat.ViewModels;
 
 public class CompletedBooksViewModel : ObservableObject
 {
-    
+    public NavigationBarViewModel NavigationBar { get; } = new();
     public Task<List<BookViewModel>> Books => Database
         .ListCompletedBooksAsync()
         .ContinueWith(t =>
