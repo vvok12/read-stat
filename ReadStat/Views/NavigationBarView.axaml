@@ -21,13 +21,13 @@
     </UserControl.Styles>
     
     <StackPanel Orientation="Vertical">
-        <Button>
+        <Button Command="{Binding ToMainCommand}">
             <iconPacks:PackIconPhosphorIcons Kind="House"/>
         </Button>
-        <Button>
+        <Button Command="{Binding ToStatisticsCommand}">
             <iconPacks:PackIconPhosphorIcons Kind="ChartLineUp"/>
         </Button>
-        <Button>
+        <Button Command="{Binding ToCompletedCommand}">
             <iconPacks:PackIconPhosphorIcons Kind="CheckCircle"/>
         </Button>
     </StackPanel>

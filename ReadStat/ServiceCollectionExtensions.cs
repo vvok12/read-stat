@@ -14,8 +14,11 @@ public static class ServiceCollectionExtensions
         collection.AddTransient<EditBookViewModel>();
         collection.AddTransient<AddBookBtnViewModel>();
         collection.AddTransient<BookViewModel>();
+        collection.AddTransient<CompletedBooksViewModel>();
+        collection.AddTransient<NavigationBarViewModel>();
+        
         collection.AddSingleton<MainWindowViewModel>();
-        collection.AddSingleton<CompletedBooksViewModel>();
+        
         collection.AddSingleton<NavigationService>();
         collection.AddSingleton<WarmupService>();
         

@@ -20,6 +20,11 @@ public class NavigationService
         _mainWindow.CurrentPage = App.Services.GetRequiredService<MainViewModel>();
     }
 
+    public void MoveToStatistics()
+    {
+        throw new NotImplementedException();
+    }
+
     public void MoveToCompletedBooks()
     {
         _mainWindow.CurrentPage = App.Services.GetRequiredService<CompletedBooksViewModel>();

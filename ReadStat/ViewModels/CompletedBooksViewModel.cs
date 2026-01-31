@@ -9,7 +9,12 @@ namespace ReadStat.ViewModels;
 
 public class CompletedBooksViewModel : ObservableObject
 {
-    public NavigationBarViewModel NavigationBar { get; } = new();
+    public CompletedBooksViewModel(NavigationBarViewModel navigationBar)
+    {
+        NavigationBar = navigationBar;
+    }
+    
+    public NavigationBarViewModel NavigationBar { get; }
     public Task<List<BookViewModel>> Books => Database
         .ListCompletedBooksAsync()
         .ContinueWith(t =>

@@ -13,9 +13,9 @@
          <DataTemplate DataType="vm:MainWindowViewModel"><view:MainWindow/></DataTemplate>
          <DataTemplate DataType="vm:EditBookViewModel"><view:EditBookView/></DataTemplate>
          <DataTemplate DataType="vm:MainViewModel"><view:MainView/></DataTemplate>
+         <DataTemplate DataType="vm:NavigationBarViewModel"><view:NavigationBarView/></DataTemplate>
          <DataTemplate DataType="bookVm:BookViewModel"><bookView:BookView/></DataTemplate>
          <DataTemplate DataType="bookVm:AddBookBtnViewModel"><bookView:AddBookBtnView/></DataTemplate>
-         <DataTemplate DataType="vm:NavigationBarViewModel"><view:NavigationBarView/></DataTemplate>
      </Application.DataTemplates>
              
     <Application.Styles>
