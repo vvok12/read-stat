@@ -39,13 +39,13 @@ public partial class EditBookViewModel: ObservableObject
             _model.Completed = _model.PagesTotal == _model.PagesRead;
             Database.AddOrUpdate(_model);
         }
-        _nav.MoveToMain();
+        _nav.MoveToUnfinishedBooks();
     }
 
     [RelayCommand]
     private void Cancel()
     {
-        _nav.MoveToMain();
+        _nav.MoveToUnfinishedBooks();
     }
     
     public Bitmap? Cover => FileSystem.LoadBookCover(_model?.CoverId);

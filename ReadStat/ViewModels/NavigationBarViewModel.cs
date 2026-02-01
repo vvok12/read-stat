@@ -14,9 +14,9 @@ public partial class NavigationBarViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void ToMain()
+    private void ToUnfinished()
     {
-        _nav.MoveToMain();
+        _nav.MoveToUnfinishedBooks();
     }
 
     [RelayCommand]

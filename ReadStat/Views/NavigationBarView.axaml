@@ -21,7 +21,7 @@
     </UserControl.Styles>
     
     <StackPanel Orientation="Vertical">
-        <Button Command="{Binding ToMainCommand}">
+        <Button Command="{Binding ToUnfinishedCommand}">
             <iconPacks:PackIconPhosphorIcons Kind="House"/>
         </Button>
         <Button Command="{Binding ToStatisticsCommand}">
