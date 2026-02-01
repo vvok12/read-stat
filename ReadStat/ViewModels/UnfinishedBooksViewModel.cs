@@ -11,7 +11,7 @@ using ReadStat.ViewModels.Books;
 
 namespace ReadStat.ViewModels;
 
-public partial class MainViewModel : ObservableObject
+public partial class UnfinishedBooksViewModel : ObservableObject
 {
     public ObservableCollection<IBookListItem> Books { get; } = [];
 
@@ -22,7 +22,7 @@ public partial class MainViewModel : ObservableObject
     
     public NavigationBarViewModel Navigation { get; private set; }
 
-    public MainViewModel(NavigationService navigationService, NavigationBarViewModel navigationBarViewModel)
+    public UnfinishedBooksViewModel(NavigationService navigationService, NavigationBarViewModel navigationBarViewModel)
     {
         Navigation = navigationBarViewModel;
         _navigationService = navigationService;

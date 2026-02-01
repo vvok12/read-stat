@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection collection)
     {
-        collection.AddTransient<MainViewModel>();
+        collection.AddTransient<UnfinishedBooksViewModel>();
         collection.AddTransient<EditBookViewModel>();
         collection.AddTransient<AddBookBtnViewModel>();
         collection.AddTransient<BookViewModel>();

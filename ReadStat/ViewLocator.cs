@@ -14,7 +14,7 @@ namespace ReadStat
         {
             return data switch
             {
-                MainViewModel mainViewModel => new MainView(),
+                UnfinishedBooksViewModel mainViewModel => new UnfinishedBooksView(),
                 BookViewModel bookViewModel => new BookView(),
                 AddBookBtnViewModel addBookBtnViewModel => new AddBookBtnView(),
                 EditBookViewModel editBookViewModel => new EditBookView(),

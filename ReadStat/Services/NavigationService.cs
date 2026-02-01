@@ -15,9 +15,10 @@ public class NavigationService
         _mainWindow = mainWindow;
     }
     
-    public void MoveToMain()
+    public void MoveToUnfinishedBooks()
     {
-        _mainWindow.CurrentPage = App.Services.GetRequiredService<MainViewModel>();
+        _mainWindow.CurrentPage = App.Services
+            .GetRequiredService<UnfinishedBooksViewModel>();
     }
 
     public void MoveToStatistics()

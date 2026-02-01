@@ -11,7 +11,7 @@
          <DataTemplate DataType="vm:CompletedBooksViewModel"><view:CompletedBooksView/></DataTemplate>
          <DataTemplate DataType="vm:MainWindowViewModel"><view:MainWindow/></DataTemplate>
          <DataTemplate DataType="vm:EditBookViewModel"><view:EditBookView/></DataTemplate>
-         <DataTemplate DataType="vm:MainViewModel"><view:MainView/></DataTemplate>
+         <DataTemplate DataType="vm:UnfinishedBooksViewModel"><view:UnfinishedBooksView/></DataTemplate>
          <DataTemplate DataType="vm:NavigationBarViewModel"><view:NavigationBarView/></DataTemplate>
          <DataTemplate DataType="vm:StatsViewModel"><view:StatsView/></DataTemplate>
          <DataTemplate DataType="bookVm:BookViewModel"><bookView:BookView/></DataTemplate>
