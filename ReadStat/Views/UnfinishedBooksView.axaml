@@ -8,10 +8,6 @@
              x:Class="ReadStat.Views.UnfinishedBooksView">
   
     <ScrollViewer>
-        <ListBox
-            DoubleTapped="OnDoubleTapped"
-            ItemsSource="{Binding Books}" 
-            SelectedItem="{Binding Selected, Mode=TwoWay}"
-            SelectionMode="Single" />
+        <ItemsControl ItemsSource="{Binding Books}"/>
     </ScrollViewer>
 </UserControl>

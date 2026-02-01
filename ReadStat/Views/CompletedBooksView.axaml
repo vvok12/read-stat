@@ -7,8 +7,6 @@
              x:DataType="vm:CompletedBooksViewModel"
              x:Class="ReadStat.Views.CompletedBooksView">
     <ScrollViewer>
-        <ListBox
-            ItemsSource="{Binding Books^}" 
-            SelectionMode="Single" />
+        <ItemsControl ItemsSource="{Binding Books^}" />
     </ScrollViewer>
 </UserControl>
