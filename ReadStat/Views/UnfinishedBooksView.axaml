@@ -7,17 +7,11 @@
              x:DataType="vm:UnfinishedBooksViewModel"
              x:Class="ReadStat.Views.UnfinishedBooksView">
   
-    <DockPanel>
-        <UserControl 
-            DockPanel.Dock="Right" 
-            Content="{Binding Navigation}"/>
-        <ScrollViewer>
-            <ListBox
-                DoubleTapped="OnDoubleTapped"
-                ItemsSource="{Binding Books}" 
-                SelectedItem="{Binding Selected, Mode=TwoWay}"
-                SelectionMode="Single" />
-        </ScrollViewer>
-    </DockPanel>
-    
+    <ScrollViewer>
+        <ListBox
+            DoubleTapped="OnDoubleTapped"
+            ItemsSource="{Binding Books}" 
+            SelectedItem="{Binding Selected, Mode=TwoWay}"
+            SelectionMode="Single" />
+    </ScrollViewer>
 </UserControl>

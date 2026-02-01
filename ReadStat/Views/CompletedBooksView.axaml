@@ -6,12 +6,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:CompletedBooksViewModel"
              x:Class="ReadStat.Views.CompletedBooksView">
-    <DockPanel>
-        <UserControl DockPanel.Dock="Right" Content="{Binding NavigationBar}"/>
-        <ScrollViewer>
-            <ListBox
-                ItemsSource="{Binding Books^}" 
-                SelectionMode="Single" />
-        </ScrollViewer>
-    </DockPanel>
+    <ScrollViewer>
+        <ListBox
+            ItemsSource="{Binding Books^}" 
+            SelectionMode="Single" />
+    </ScrollViewer>
 </UserControl>

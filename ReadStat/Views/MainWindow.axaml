@@ -5,5 +5,8 @@
         x:Class="ReadStat.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Title="ReadStat">
-        <ContentControl Content="{Binding CurrentPage}"/>
+        <DockPanel>
+                <UserControl DockPanel.Dock="Right" Content="{Binding NavigationBar}"/>
+                <ContentControl Content="{Binding CurrentPage}"/>
+        </DockPanel>
 </Window>

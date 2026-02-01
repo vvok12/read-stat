@@ -1,41 +1,54 @@
-using System;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
+using ReadStat.Messages;
 using ReadStat.Models;
 using ReadStat.ViewModels;
-using ReadStat.ViewModels.Books;
 
 namespace ReadStat.Services;
 
 public class NavigationService
 {
-    private readonly MainWindowViewModel _mainWindow;
-
-    public NavigationService(MainWindowViewModel mainWindow)
+    private object? _currentPage;
+    public object CurrentPage
     {
-        _mainWindow = mainWindow;
+        get 
+        {
+            if (_currentPage == null)
+            {
+                MoveToUnfinishedBooks();
+            }
+            return _currentPage!;
+        }
+        private set
+        {
+            if (_currentPage == value) return;
+            
+            _currentPage = value;
+            WeakReferenceMessenger.Default.Send(new CurrentPageChanged(value));
+        }
     }
-    
+
     public void MoveToUnfinishedBooks()
     {
-        _mainWindow.CurrentPage = App.Services
+        CurrentPage = App.Services
             .GetRequiredService<UnfinishedBooksViewModel>();
     }
 
     public void MoveToStatistics()
     {
-        _mainWindow.CurrentPage = App.Services
+        CurrentPage = App.Services
             .GetRequiredService<StatsViewModel>();
     }
 
     public void MoveToCompletedBooks()
     {
-        _mainWindow.CurrentPage = App.Services
+        CurrentPage = App.Services
             .GetRequiredService<CompletedBooksViewModel>();
     }
 
     public void EditBook(Book book)
     {
-        _mainWindow.CurrentPage = App.Services
+        CurrentPage = App.Services
             .GetRequiredService<EditBookViewModel>()
             .WithModel(book);
     }
