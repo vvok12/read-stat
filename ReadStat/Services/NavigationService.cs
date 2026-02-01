@@ -22,12 +22,14 @@ public class NavigationService
 
     public void MoveToStatistics()
     {
-        throw new NotImplementedException();
+        _mainWindow.CurrentPage = App.Services
+            .GetRequiredService<StatsViewModel>();
     }
 
     public void MoveToCompletedBooks()
     {
-        _mainWindow.CurrentPage = App.Services.GetRequiredService<CompletedBooksViewModel>();
+        _mainWindow.CurrentPage = App.Services
+            .GetRequiredService<CompletedBooksViewModel>();
     }
 
     public void EditBook(Book book)

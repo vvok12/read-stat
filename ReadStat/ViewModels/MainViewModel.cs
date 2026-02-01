@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using ReadStat.Data;
 using ReadStat.Models;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Avalonia.Controls;
 using System;
 using System.Threading.Tasks;
@@ -20,11 +19,12 @@ public partial class MainViewModel : ObservableObject
     private IBookListItem? _selected;
 
     private readonly NavigationService _navigationService;
+    
+    public NavigationBarViewModel Navigation { get; private set; }
 
-    public MainViewModel(NavigationService navigationService)
+    public MainViewModel(NavigationService navigationService, NavigationBarViewModel navigationBarViewModel)
     {
-        ArgumentNullException.ThrowIfNull(navigationService);
-        
+        Navigation = navigationBarViewModel;
         _navigationService = navigationService;
         _ = Refresh();
     }
@@ -39,16 +39,6 @@ public partial class MainViewModel : ObservableObject
         {
             Books.Add(new BookViewModel(b));
         }
-        
-        OnPropertyChanged(nameof(TotalBooksRead));
-        OnPropertyChanged(nameof(TotalPagesRead));
-        OnPropertyChanged(nameof(PagesReadThisMonth));
-    }
-
-    [RelayCommand]
-    private void ListCompletedBooks()
-    {
-        _navigationService.MoveToCompletedBooks();
     }
 
     [RelayCommand]
@@ -72,18 +62,5 @@ public partial class MainViewModel : ObservableObject
         if (Selected is not BookViewModel bvm) return;
         Database.Delete(bvm.Id);
         await Refresh();
-    }
-
-    public Task<int> TotalBooksRead => Database.CountCompletedBooksAsync();
-    public Task<int> TotalPagesRead => Database.CountPagesReadAsync();
-    public int PagesReadThisMonth
-    {
-        get
-        {
-            var now = DateTime.UtcNow;
-            var monthStart = new DateTime(now.Year, now.Month, 1);
-            // We don't store per-day page increments; approximate by summing pages for books created this month
-            return Database.GetAllBooks().Where(b => b.CreatedAt >= monthStart).Sum(b => b.PagesRead);
-        }
     }
 }

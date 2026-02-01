@@ -3,13 +3,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ReadStat.ViewModels"
-             xmlns:views="clr-namespace:ReadStat.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:MainViewModel"
              x:Class="ReadStat.Views.MainView">
   
     <DockPanel>
-        <views:StatsView DockPanel.Dock="Right" />
+        <UserControl 
+            DockPanel.Dock="Right" 
+            Content="{Binding Navigation}"/>
         <ScrollViewer>
             <ListBox
                 DoubleTapped="OnDoubleTapped"
