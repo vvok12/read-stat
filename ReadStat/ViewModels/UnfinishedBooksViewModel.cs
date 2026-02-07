@@ -1,12 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ReadStat.Data;
-using ReadStat.Models;
 using System.Collections.ObjectModel;
-using Avalonia.Controls;
-using System;
 using System.Threading.Tasks;
-using ReadStat.Services;
 using ReadStat.ViewModels.Books;
 
 namespace ReadStat.ViewModels;
@@ -18,16 +14,19 @@ public partial class UnfinishedBooksViewModel : ObservableObject
     [ObservableProperty]
     private IBookListItem? _selected;
 
-    private readonly NavigationService _navigationService;
     private readonly AddBookBtnViewModel _addBookBtnViewModel;
-    
+    private readonly BookViewModelFactory _bookViewModelFactory;
+
     public NavigationBarViewModel Navigation { get; private set; }
 
-    public UnfinishedBooksViewModel(NavigationService navigationService, NavigationBarViewModel navigationBarViewModel)
+    public UnfinishedBooksViewModel(
+        AddBookBtnViewModel  addBookBtnViewModel,
+        NavigationBarViewModel navigationBarViewModel,
+        BookViewModelFactory bookViewModelFactory)
     {
         Navigation = navigationBarViewModel;
-        _navigationService = navigationService;
-        _addBookBtnViewModel = new AddBookBtnViewModel(navigationService);
+        _addBookBtnViewModel = addBookBtnViewModel;
+        _bookViewModelFactory = bookViewModelFactory;
         _ = Refresh();
     }
 
@@ -39,23 +38,8 @@ public partial class UnfinishedBooksViewModel : ObservableObject
         Books.Add(_addBookBtnViewModel);
         foreach (var b in all)
         {
-            Books.Add(new BookViewModel(b));
+            Books.Add(_bookViewModelFactory.Create(b));
         }
-    }
-
-    [RelayCommand]
-    private void Edit(ContentControl? owner)
-    {
-        if (Selected == null) return;
-
-        var model = Selected switch
-        {
-            BookViewModel bvm => bvm.ToModel(),
-            AddBookBtnViewModel => new Book(),
-            _ => throw new InvalidOperationException("could not cast selected content")
-        };
-
-        _navigationService.EditBook(model);
     }
 
     [RelayCommand]
