@@ -20,7 +20,6 @@
              
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="avares://IconPacks.Avalonia.PhosphorIcons/PhosphorIcons.axaml" />
         
         <Style Selector="Button">
             <Setter Property="BorderThickness" Value="1"/>
@@ -34,6 +33,9 @@
     
     <Application.Resources>
         <Bitmap x:Key="DefaultBookCover">Assets/defaultBookCover.jpg</Bitmap>
+        <StreamGeometry x:Key="PhosphorIconsHouse">M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z</StreamGeometry>
+        <StreamGeometry x:Key="PhosphorIconsChartLineUp">M232,208a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V48a8,8,0,0,1,16,0V156.69l50.34-50.35a8,8,0,0,1,11.32,0L128,132.69,180.69,80H160a8,8,0,0,1,0-16h40a8,8,0,0,1,8,8v40a8,8,0,0,1-16,0V91.31l-58.34,58.35a8,8,0,0,1-11.32,0L96,123.31l-56,56V200H224A8,8,0,0,1,232,208Z</StreamGeometry>
+        <StreamGeometry x:Key="PhosphorIconsCheckCircle">M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z</StreamGeometry>
     </Application.Resources>
     
 </Application>
