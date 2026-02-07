@@ -19,6 +19,7 @@ public partial class UnfinishedBooksViewModel : ObservableObject
     private IBookListItem? _selected;
 
     private readonly NavigationService _navigationService;
+    private readonly AddBookBtnViewModel _addBookBtnViewModel;
     
     public NavigationBarViewModel Navigation { get; private set; }
 
@@ -26,6 +27,7 @@ public partial class UnfinishedBooksViewModel : ObservableObject
     {
         Navigation = navigationBarViewModel;
         _navigationService = navigationService;
+        _addBookBtnViewModel = new AddBookBtnViewModel(navigationService);
         _ = Refresh();
     }
 
@@ -34,7 +36,7 @@ public partial class UnfinishedBooksViewModel : ObservableObject
         Books.Clear();
         var all = await Database.ListUnfinishedBooksAsync();
         
-        Books.Add(new AddBookBtnViewModel());
+        Books.Add(_addBookBtnViewModel);
         foreach (var b in all)
         {
             Books.Add(new BookViewModel(b));
