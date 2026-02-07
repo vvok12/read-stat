@@ -32,8 +32,8 @@
         <NumericUpDown Minimum="0" Maximum="10000" Value="{Binding PagesRead, Mode=TwoWay}" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-            <Button Content="Save" Command="{Binding SaveCommand}" />
             <Button Content="Cancel" Command="{Binding CancelCommand}" />
+            <Button Content="Save" Command="{Binding SaveCommand}" />
         </StackPanel>
     </StackPanel>
 </UserControl>
