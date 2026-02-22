@@ -36,15 +36,16 @@ public partial class EditBookViewModel: ObservableObject
     {
         if (_model is not null)
         {
+            _model.Completed = _model.PagesTotal == _model.PagesRead;
             Database.AddOrUpdate(_model);
         }
-        _nav.MoveToMain();
+        _nav.MoveToUnfinishedBooks();
     }
 
     [RelayCommand]
     private void Cancel()
     {
-        _nav.MoveToMain();
+        _nav.MoveToUnfinishedBooks();
     }
     
     public Bitmap? Cover => FileSystem.LoadBookCover(_model?.CoverId);
@@ -75,7 +76,7 @@ public partial class EditBookViewModel: ObservableObject
         set
         {
             if (_model is null) return;
-            _model.PagesRead = value;
+            _model.PagesRead = Math.Min(value, PagesTotal);
             OnPropertyChanged();
         }
     }

@@ -2,19 +2,19 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="ReadStat.Views.StatsView"
-             x:DataType="vm:MainViewModel"
+             x:DataType="vm:StatsViewModel"
              xmlns:vm="clr-namespace:ReadStat.ViewModels">
   <Border Padding="8" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" >
     <StackPanel>
-      <TextBlock Text="Statistics" FontWeight="Bold" Margin="0 0 0 8" />
+      <TextBlock Text="Statistics" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 8" />
       <StackPanel Orientation="Vertical" Spacing="12">
         <StackPanel>
           <TextBlock Text="Total books read" />
-          <TextBlock Text="{Binding TotalBooksRead}" FontWeight="Bold" />
+          <TextBlock Text="{Binding TotalBooksRead^}" FontWeight="Bold" />
         </StackPanel>
         <StackPanel>
           <TextBlock Text="Total pages read" />
-          <TextBlock Text="{Binding TotalPagesRead}" FontWeight="Bold" />
+          <TextBlock Text="{Binding TotalPagesRead^}" FontWeight="Bold" />
         </StackPanel>
         <StackPanel>
           <TextBlock Text="Pages this month" />

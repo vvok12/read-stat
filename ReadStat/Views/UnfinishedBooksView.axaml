@@ -2,11 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ReadStat.ViewModels.Books"
+             xmlns:vm="clr-namespace:ReadStat.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:AddBookBtnViewModel"
-             x:Class="ReadStat.Views.Books.AddBookBtnView">
-    <Button Command="{Binding AddBookCommand}">
-        <TextBlock HorizontalAlignment="Center"> + </TextBlock>
-    </Button>
+             x:DataType="vm:UnfinishedBooksViewModel"
+             x:Class="ReadStat.Views.UnfinishedBooksView">
+  
+    <ScrollViewer>
+        <ItemsControl ItemsSource="{Binding Books}"/>
+    </ScrollViewer>
 </UserControl>

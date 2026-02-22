@@ -1,17 +1,25 @@
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ReadStat.Data;
 using ReadStat.Models;
+using ReadStat.Services;
 
 namespace ReadStat.ViewModels.Books;
 
-public class BookViewModel : ObservableObject, IBookListItem
+public partial class BookViewModel(NavigationService navigationService) : ObservableObject, IBookListItem
 {
-    private readonly Book _model;
-
-    public BookViewModel(Book model)
+    private Book _model = null!;
+    public BookViewModel WithModel(Book model)
     {
-        _model = model;
+        _model =  model;
+        return this;
+    }
+
+    [RelayCommand]
+    private void EditBook()
+    {
+        navigationService.EditBook(_model);
     }
     
     public int Id => _model.Id;
@@ -71,7 +79,10 @@ public class BookViewModel : ObservableObject, IBookListItem
     }
 
     public double Progress => PagesTotal > 0 ? (double)PagesRead / PagesTotal : 0.0;
+}
 
-    public Book ToModel() => _model;
-
+public class BookViewModelFactory(NavigationService navigationService)
+{
+    public BookViewModel Create(Book model) => new BookViewModel(navigationService)
+        .WithModel(model);
 }

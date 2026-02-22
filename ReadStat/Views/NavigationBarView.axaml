@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ReadStat.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:NavigationBarViewModel"
+             x:Class="ReadStat.Views.NavigationBarView">
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="IconElement">
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24"/>
+        </Style>
+    </UserControl.Styles>
+    
+    <StackPanel Orientation="Vertical">
+        <Button Command="{Binding ToUnfinishedCommand}">
+            <PathIcon Data="{StaticResource PhosphorIconsHouse}" />
+        </Button>
+        <Button Command="{Binding ToStatisticsCommand}">
+            <PathIcon Data="{StaticResource PhosphorIconsChartLineUp}"/>
+        </Button>
+        <Button Command="{Binding ToCompletedCommand}">
+            <PathIcon Data="{StaticResource PhosphorIconsCheckCircle}"/>
+        </Button>
+    </StackPanel>
+</UserControl>

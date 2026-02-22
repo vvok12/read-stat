@@ -36,7 +36,7 @@ public class App : Application
             };
         }
 
-        Services.GetRequiredService<NavigationService>().MoveToMain();
+        Services.GetRequiredService<NavigationService>().MoveToUnfinishedBooks();
         base.OnFrameworkInitializationCompleted();
     }
     
