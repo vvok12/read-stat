@@ -22,7 +22,7 @@ public partial class BookViewModel(NavigationService navigationService) : Observ
         navigationService.EditBook(_model);
     }
     
-    public int Id => _model.Id;
+    public int Id => _model.BookId;
     public string Title
     {
         get => _model.Title;
@@ -52,32 +52,12 @@ public partial class BookViewModel(NavigationService navigationService) : Observ
         get => _model.PagesRead;
         set
         {
-            _model.PagesRead = value; 
+            _model.PagesRead = value;
             OnPropertyChanged(); 
             OnPropertyChanged(nameof(Progress));
         }
     }
-
-    public bool Completed
-    {
-        get => _model.Completed;
-        set
-        {
-            _model.Completed = value; 
-            OnPropertyChanged();
-        }
-    }
-
-    public int Rating
-    {
-        get => _model.Rating;
-        set
-        {
-            _model.Rating = value; 
-            OnPropertyChanged();
-        }
-    }
-
+    
     public double Progress => PagesTotal > 0 ? (double)PagesRead / PagesTotal : 0.0;
 }
 
