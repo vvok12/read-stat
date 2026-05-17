@@ -17,14 +17,7 @@ public class StatsViewModel : ObservableObject
     
     public Task<int> TotalBooksRead => Database.CountCompletedBooksAsync();
     public Task<int> TotalPagesRead => Database.CountPagesReadAsync();
-    public int PagesReadThisMonth
-    {
-        get
-        {
-            var now = DateTime.UtcNow;
-            var monthStart = new DateTime(now.Year, now.Month, 1);
-            // We don't store per-day page increments; approximate by summing pages for books created this month
-            return Database.GetAllBooks().Where(b => b.CreatedAt >= monthStart).Sum(b => b.PagesRead);
-        }
-    }
+    public int PagesReadThisMonth =>
+        // not implement yet
+        -1;
 }
