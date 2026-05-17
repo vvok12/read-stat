@@ -8,34 +8,61 @@
              xmlns:draw="using:LiveChartsCore.SkiaSharpView.Drawing.Geometries"
              xmlns:vm="clr-namespace:ReadStat.ViewModels">
   <Border Padding="8" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" >
-    <StackPanel>
-      <TextBlock Text="Statistics" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 8" />
-      <StackPanel Orientation="Vertical" Spacing="12">
-        <StackPanel>
-          <TextBlock Text="Total books read" />
-          <TextBlock Text="{Binding TotalBooksRead}" FontWeight="Bold" />
+    <ScrollViewer>
+      <StackPanel>
+        <TextBlock Text="Statistics" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 8" />
+        <StackPanel Orientation="Vertical" Spacing="12">
+          <StackPanel>
+            <lvc:PieChart
+              LegendPosition="Right"
+              Height="200"
+              InitialRotation="-90"
+              MinValue="0"
+              MaxValue="{Binding TotalBooksRead}">
+              <lvc:PieChart.Series>
+                <lvc:XamlGaugeSeries
+                  SeriesName="Total books read"
+                  GaugeValue="{Binding TotalBooksRead}"
+                  DataLabelsSize="20"
+                  MaxRadialColumnWidth="50"/>
+                <lvc:XamlGaugeBackgroundSeries/>
+              </lvc:PieChart.Series>
+            </lvc:PieChart>
+          </StackPanel>
+          <StackPanel>
+            <lvc:PieChart
+              LegendPosition="Right"
+              Height="200"
+              InitialRotation="-90"
+              MinValue="0"
+              MaxValue="{Binding TotalPagesRead}">
+              <lvc:PieChart.Series>
+                <lvc:XamlGaugeSeries
+                  SeriesName="Total pages read"
+                  GaugeValue="{Binding TotalPagesRead}"
+                  DataLabelsSize="20"
+                  MaxRadialColumnWidth="50"/>
+                <lvc:XamlGaugeBackgroundSeries/>
+              </lvc:PieChart.Series>
+            </lvc:PieChart>
+          </StackPanel>
+          <StackPanel>
+            <lvc:CartesianChart
+              SyncContext="{Binding Sync}"
+              Height="400"
+              LegendPosition="Right">
+              <lvc:CartesianChart.Series>
+                <lvc:XamlLineSeries
+                  x:TypeArguments="lvcd:ObservablePoint, draw:StarGeometry"
+                  SeriesName="Daily Reads (sum)"
+                  Values="{Binding PagesReadThisMonth}"
+                  Fill="{x:Null}"
+                  GeometrySize="20"/>
+              </lvc:CartesianChart.Series>
+            </lvc:CartesianChart>
+          </StackPanel>
         </StackPanel>
-        <StackPanel>
-          <TextBlock Text="Total pages read" />
-          <TextBlock Text="{Binding TotalPagesRead}" FontWeight="Bold" />
-        </StackPanel>
-        <StackPanel>
-          <lvc:CartesianChart
-            SyncContext="{Binding Sync}"
-            Height="600"
-            LegendPosition="Right">
-            <lvc:CartesianChart.Series>
-              <lvc:XamlLineSeries
-                x:TypeArguments="lvcd:ObservablePoint, draw:StarGeometry"
-                SeriesName="Daily Reads (sum)"
-                Values="{Binding PagesReadThisMonth}"
-                Fill="{x:Null}"
-                GeometrySize="20"/>
-            </lvc:CartesianChart.Series>
-          </lvc:CartesianChart>
-        </StackPanel>
-        
       </StackPanel>
-    </StackPanel>
+    </ScrollViewer>
   </Border>
 </UserControl>
