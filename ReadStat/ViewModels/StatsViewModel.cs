@@ -12,53 +12,45 @@ using ReadStat.Data;
 
 namespace ReadStat.ViewModels;
 
-public class StatsViewModel : ObservableObject
+public partial class StatsViewModel : ObservableObject
 {
-    private List<ObservablePoint> _pagesReadThisMonth = [];
+    [ObservableProperty]
+    private ObservablePoint[] _pagesReadThisMonth = [];
 
-    /*
-     *
-       <lvc:CartesianChart.Series>
-         <lvc:XamlLineSeries
-           SeriesName="Pages this month"
-           Values="{Binding PagesReadThisMonth}"
-           Fill="{x:Null}"
-           GeometrySize="20"
-           x:TypeArguments="x:Int32, draw:StarGeometry"/>
-       </lvc:CartesianChart.Series>
-     *
-     * 
-     */
+    [ObservableProperty]
+    private int _totalPagesRead = 0;
+    
+    [ObservableProperty]
+    private int _totalBooksRead = 0;
+    
+    public object Sync { get; } = new();
     
     public StatsViewModel()
     {
-        Series.Add(new LineSeries<ObservablePoint, StarGeometry>
+        Task.Run(async () =>
         {
-            Name = "Pages this month",
-            GeometrySize = 20,
-            Values = _pagesReadThisMonth,
-            Fill = null
+            TotalBooksRead = await Database.CountCompletedBooksAsync();
+            TotalPagesRead = await Database.CountPagesReadAsync();
+            
+            var thisMonth = await QueryPagesReadThisMonthAsync();
+            lock (Sync)
+            {
+                PagesReadThisMonth = thisMonth;
+            }
         });
-        Task.Run(QueryPagesReadThisMonthAsync);
     }
     
-    public Task<int> TotalBooksRead => Database.CountCompletedBooksAsync();
-    public Task<int> TotalPagesRead => Database.CountPagesReadAsync();
-
-    public object Sync { get; } = new();
-    public List<ISeries> Series { get; set; } = new();
-    
-    private async Task QueryPagesReadThisMonthAsync()
+    private async Task<ObservablePoint[]> QueryPagesReadThisMonthAsync()
     {
         var progress = GetLast30DaysProgress();
         var len = progress.Length;
-        var values = progress.Select((el, idx) => new ObservablePoint(idx - len, el)).ToArray();
-
-        lock (Sync)
+        
+        var shiftedValues = new ObservablePoint[len];
+        for (var idx = 0; idx < len; idx++)
         {
-            _pagesReadThisMonth.Clear();
-            _pagesReadThisMonth.AddRange(values);
+            shiftedValues[idx] = new ObservablePoint(idx-len, progress[idx]);
         }
+        return shiftedValues;
     }
 
     private int[] GetLast30DaysProgress()

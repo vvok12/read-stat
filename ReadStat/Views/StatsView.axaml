@@ -4,6 +4,7 @@
              x:Class="ReadStat.Views.StatsView"
              x:DataType="vm:StatsViewModel"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             xmlns:lvcd="using:LiveChartsCore.Defaults"
              xmlns:draw="using:LiveChartsCore.SkiaSharpView.Drawing.Geometries"
              xmlns:vm="clr-namespace:ReadStat.ViewModels">
   <Border Padding="8" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" >
@@ -12,18 +13,25 @@
       <StackPanel Orientation="Vertical" Spacing="12">
         <StackPanel>
           <TextBlock Text="Total books read" />
-          <TextBlock Text="{Binding TotalBooksRead^}" FontWeight="Bold" />
+          <TextBlock Text="{Binding TotalBooksRead}" FontWeight="Bold" />
         </StackPanel>
         <StackPanel>
           <TextBlock Text="Total pages read" />
-          <TextBlock Text="{Binding TotalPagesRead^}" FontWeight="Bold" />
+          <TextBlock Text="{Binding TotalPagesRead}" FontWeight="Bold" />
         </StackPanel>
         <StackPanel>
           <lvc:CartesianChart
             SyncContext="{Binding Sync}"
-            Series="{Binding Series}"
             Height="600"
             LegendPosition="Right">
+            <lvc:CartesianChart.Series>
+              <lvc:XamlLineSeries
+                x:TypeArguments="lvcd:ObservablePoint, draw:StarGeometry"
+                SeriesName="Pages this month"
+                Values="{Binding PagesReadThisMonth}"
+                Fill="{x:Null}"
+                GeometrySize="20"/>
+            </lvc:CartesianChart.Series>
           </lvc:CartesianChart>
         </StackPanel>
         
