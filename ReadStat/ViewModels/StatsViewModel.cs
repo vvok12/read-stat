@@ -32,7 +32,7 @@ public partial class StatsViewModel : ObservableObject
             TotalBooksRead = await Database.CountCompletedBooksAsync();
             TotalPagesRead = await Database.CountPagesReadAsync();
             
-            var thisMonth = await QueryPagesReadThisMonthAsync();
+            var thisMonth = await QueryDailyReadSumAsync();
             lock (Sync)
             {
                 PagesReadThisMonth = thisMonth;
@@ -40,22 +40,30 @@ public partial class StatsViewModel : ObservableObject
         });
     }
     
-    private async Task<ObservablePoint[]> QueryPagesReadThisMonthAsync()
+    private async Task<ObservablePoint[]> QueryDailyReadSumAsync()
     {
-        var progress = GetLast30DaysProgress();
-        var len = progress.Length;
-        
-        var shiftedValues = new ObservablePoint[len];
-        for (var idx = 0; idx < len; idx++)
+        var reads = await Database.GetLastMonthDailyReadsAsync();
+        if (reads.Count == 0)
         {
-            shiftedValues[idx] = new ObservablePoint(idx-len, progress[idx]);
+            return [];
         }
-        return shiftedValues;
-    }
 
-    private int[] GetLast30DaysProgress()
-    {
-        var resp = new int[30] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        return resp;
+        if (reads.Count > 30)
+        {
+            throw new InvalidOperationException("More than 30 reads are not supported");
+        }
+
+        var prevY = 0;
+        var values = reads
+            .Select((r) =>
+            {
+                var x = r.DayBefore;
+                var y = r.PageSum + prevY;
+                prevY = y; 
+                return new  ObservablePoint(x, y); 
+            })
+            .ToArray();
+
+        return values;
     }
 }
