@@ -27,7 +27,7 @@
             <lvc:CartesianChart.Series>
               <lvc:XamlLineSeries
                 x:TypeArguments="lvcd:ObservablePoint, draw:StarGeometry"
-                SeriesName="Pages this month"
+                SeriesName="Daily Reads (sum)"
                 Values="{Binding PagesReadThisMonth}"
                 Fill="{x:Null}"
                 GeometrySize="20"/>

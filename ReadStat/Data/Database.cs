@@ -64,6 +64,15 @@ public static class Database
                 GROUP BY bs.book_id
             ) bs ON b.book_id = bs.bs_book_id
             WHERE book_pages_total > pages_read or pages_read is null;
+
+            CREATE VIEW IF NOT EXISTS month_reads AS 
+            SELECT
+                sum(book_session_pages_read) as PageSum,
+                ceil(julianday(date(book_session_ts)) - julianday('now')) as DayBefore
+            FROM book_sessions
+            WHERE book_session_ts > date('now', '-30 day')
+            GROUP BY date(book_session_ts)
+            ORDER BY DayBefore;
 ");
     }
 
@@ -103,6 +112,14 @@ public static class Database
         return totalPages;
     }
 
+    public static async Task<List<DailyReads>> GetLastMonthDailyReadsAsync()
+    {
+        await using var conn = GetConnection();
+        await conn.OpenAsync();
+        var reads = await conn
+            .QueryAsync<DailyReads>("SELECT * FROM month_reads");
+        return reads.AsList();
+    }
 
     public static async Task<int> AddOrUpdate(Book b)
     {
