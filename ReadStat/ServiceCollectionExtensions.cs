@@ -13,12 +13,13 @@ public static class ServiceCollectionExtensions
         collection.AddTransient<UnfinishedBooksViewModel>();
         collection.AddTransient<EditBookViewModel>();
         collection.AddTransient<AddBookBtnViewModel>();
-        collection.AddTransient<BookViewModel>();
+        collection.AddTransient<UnfinishedBookViewModel>();
         collection.AddTransient<CompletedBooksViewModel>();
         collection.AddTransient<NavigationBarViewModel>();
         collection.AddTransient<StatsViewModel>();
         collection.AddSingleton<AddBookBtnViewModel>();
-        collection.AddSingleton<BookViewModelFactory>();
+        collection.AddSingleton<UnfinishedBookViewModelFactory>();
+        collection.AddSingleton<CompletedBookViewModelFactory>();
         
         collection.AddSingleton<MainWindowViewModel>();
         

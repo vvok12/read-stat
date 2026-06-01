@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace ReadStat.Views.Books;
 
-public partial class BookView : UserControl
+public partial class UnfinishedBookView : UserControl
 {
-    public BookView()
+    public UnfinishedBookView()
     {
         InitializeComponent();
     }

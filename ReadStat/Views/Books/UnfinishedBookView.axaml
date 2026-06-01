@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:books="clr-namespace:ReadStat.ViewModels.Books"
+             xmlns:bookviews="clr-namespace:ReadStat.Views.Books"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ReadStat.Views.Books.UnfinishedBookView"
+             x:DataType="books:UnfinishedBookViewModel">
+    <Button Command="{Binding EditBookCommand}">
+        <DockPanel>
+            <bookviews:BookCardView
+                DockPanel.Dock="Left"
+                DataContext="{Binding BookCardViewModel}"/>
+            
+            <bookviews:BookProgressCardView
+                DockPanel.Dock="Right" 
+                DataContext="{Binding BookProgressCard}"
+                />
+
+            <Border Background="Transparent"/>
+        </DockPanel>
+    </Button>
+</UserControl>

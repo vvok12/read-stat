@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Books\BookView.axaml.cs">
+    <Compile Update="Views\Books\UnfinishedBookView.axaml.cs">
       <DependentUpon>BookView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

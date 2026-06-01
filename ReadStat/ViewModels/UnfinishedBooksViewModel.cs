@@ -15,18 +15,18 @@ public partial class UnfinishedBooksViewModel : ObservableObject
     private IBookListItem? _selected;
 
     private readonly AddBookBtnViewModel _addBookBtnViewModel;
-    private readonly BookViewModelFactory _bookViewModelFactory;
+    private readonly UnfinishedBookViewModelFactory _unfinishedBookViewModelFactory;
 
     public NavigationBarViewModel Navigation { get; private set; }
 
     public UnfinishedBooksViewModel(
         AddBookBtnViewModel  addBookBtnViewModel,
         NavigationBarViewModel navigationBarViewModel,
-        BookViewModelFactory bookViewModelFactory)
+        UnfinishedBookViewModelFactory unfinishedBookViewModelFactory)
     {
         Navigation = navigationBarViewModel;
         _addBookBtnViewModel = addBookBtnViewModel;
-        _bookViewModelFactory = bookViewModelFactory;
+        _unfinishedBookViewModelFactory = unfinishedBookViewModelFactory;
         _ = Refresh();
     }
 
@@ -38,14 +38,14 @@ public partial class UnfinishedBooksViewModel : ObservableObject
         Books.Add(_addBookBtnViewModel);
         foreach (var b in all)
         {
-            Books.Add(_bookViewModelFactory.Create(b));
+            Books.Add(_unfinishedBookViewModelFactory.Create(b));
         }
     }
 
     [RelayCommand]
     private async Task Delete()
     {
-        if (Selected is not BookViewModel bvm) return;
+        if (Selected is not UnfinishedBookViewModel bvm) return;
         Database.Delete(bvm.Id);
         await Refresh();
     }
