@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="clr-namespace:ReadStat.ViewModels.Books"
+             x:DataType="vm:BookProgressCardViewModel"
+             x:Class="ReadStat.Views.Books.BookProgressCardView">
+    <StackPanel Orientation="Vertical" Margin="20">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Pages:" />
+            <TextBlock Text="{Binding PagesRead}" />
+            <TextBlock Text="/" />
+            <TextBlock Text="{Binding PagesTotal}" />
+        </StackPanel>
+            
+        <ProgressBar
+            Minimum="0" Maximum="1" Value="{Binding Progress}" 
+            Width="120" Height="12" />
+    </StackPanel>
+</UserControl>

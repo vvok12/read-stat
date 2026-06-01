@@ -47,9 +47,14 @@ public static class Database
             );
 
             CREATE VIEW IF NOT EXISTS completed_books AS
-            SELECT * FROM books 
-            WHERE book_pages_total <= 
-                (SELECT sum(book_session_pages_read) FROM book_sessions WHERE book_id = books.book_id);
+            SELECT *, 
+                (SELECT book_review_rating 
+                 FROM book_reviews 
+                 WHERE books.book_id = book_reviews.book_id 
+                 LIMIT 1) AS review
+            FROM books 
+            WHERE book_pages_total <=
+                  (SELECT sum(book_session_pages_read) FROM book_sessions WHERE book_id = books.book_id);
 
             CREATE VIEW IF NOT EXISTS unfinished_books AS
             SELECT b.book_id,
@@ -76,12 +81,12 @@ public static class Database
 ");
     }
 
-    public static async Task<List<Book>> ListCompletedBooksAsync()
+    public static async Task<List<CompletedBook>> ListCompletedBooksAsync()
     {
         await using var conn = GetConnection();
         await conn.OpenAsync();
         var items = await conn
-            .QueryAsync<Book>("SELECT * FROM completed_books ORDER BY book_ts DESC");
+            .QueryAsync<CompletedBook>("SELECT * FROM completed_books ORDER BY book_ts DESC");
         return items.AsList();
     }
     

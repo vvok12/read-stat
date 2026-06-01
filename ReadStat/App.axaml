@@ -14,13 +14,23 @@
          <DataTemplate DataType="vm:UnfinishedBooksViewModel"><view:UnfinishedBooksView/></DataTemplate>
          <DataTemplate DataType="vm:NavigationBarViewModel"><view:NavigationBarView/></DataTemplate>
          <DataTemplate DataType="vm:StatsViewModel"><view:StatsView/></DataTemplate>
-         <DataTemplate DataType="bookVm:BookViewModel"><bookView:BookView/></DataTemplate>
+         <DataTemplate DataType="bookVm:BookCardViewModel"><bookView:BookCardView/></DataTemplate>
+         <DataTemplate DataType="bookVm:UnfinishedBookViewModel"><bookView:UnfinishedBookView/></DataTemplate>
+         <DataTemplate DataType="bookVm:CompletedBookViewModel"><bookView:CompletedBookView/></DataTemplate>
          <DataTemplate DataType="bookVm:AddBookBtnViewModel"><bookView:AddBookBtnView/></DataTemplate>
      </Application.DataTemplates>
              
     <Application.Styles>
         <FluentTheme />
+
+        <Style Selector="UserControl">
+            <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" />
+        </Style>
         
+        <Style Selector="ContentControl">
+            <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" />
+        </Style>
+
         <Style Selector="Button">
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="Gray"/>
