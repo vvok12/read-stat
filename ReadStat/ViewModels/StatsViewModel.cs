@@ -1,30 +1,69 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using LiveChartsCore;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
 using ReadStat.Data;
 
 namespace ReadStat.ViewModels;
 
-public class StatsViewModel : ObservableObject
+public partial class StatsViewModel : ObservableObject
 {
-    private readonly NavigationBarViewModel _nav;
+    [ObservableProperty]
+    private ObservablePoint[] _pagesReadThisMonth = [];
 
-    public StatsViewModel(NavigationBarViewModel navigationBar)
+    [ObservableProperty]
+    private int _totalPagesRead = 0;
+    
+    [ObservableProperty]
+    private int _totalBooksRead = 0;
+    
+    public object Sync { get; } = new();
+    
+    public StatsViewModel()
     {
-        _nav =  navigationBar;
+        Task.Run(async () =>
+        {
+            TotalBooksRead = await Database.CountCompletedBooksAsync();
+            TotalPagesRead = await Database.CountPagesReadAsync();
+            
+            var thisMonth = await QueryDailyReadSumAsync();
+            lock (Sync)
+            {
+                PagesReadThisMonth = thisMonth;
+            }
+        });
     }
     
-    public Task<int> TotalBooksRead => Database.CountCompletedBooksAsync();
-    public Task<int> TotalPagesRead => Database.CountPagesReadAsync();
-    public int PagesReadThisMonth
+    private async Task<ObservablePoint[]> QueryDailyReadSumAsync()
     {
-        get
+        var reads = await Database.GetLastMonthDailyReadsAsync();
+        if (reads.Count == 0)
         {
-            var now = DateTime.UtcNow;
-            var monthStart = new DateTime(now.Year, now.Month, 1);
-            // We don't store per-day page increments; approximate by summing pages for books created this month
-            return Database.GetAllBooks().Where(b => b.CreatedAt >= monthStart).Sum(b => b.PagesRead);
+            return [];
         }
+
+        if (reads.Count > 30)
+        {
+            throw new InvalidOperationException("More than 30 reads are not supported");
+        }
+
+        var prevY = 0;
+        var values = reads
+            .Select((r) =>
+            {
+                var x = r.DayBefore;
+                var y = r.PageSum + prevY;
+                prevY = y; 
+                return new  ObservablePoint(x, y); 
+            })
+            .ToArray();
+
+        return values;
     }
 }

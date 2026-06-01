@@ -32,12 +32,11 @@ public partial class EditBookViewModel: ObservableObject
     private Book? _model;
     
     [RelayCommand]
-    private void Save()
+    private async Task Save()
     {
         if (_model is not null)
         {
-            _model.Completed = _model.PagesTotal == _model.PagesRead;
-            Database.AddOrUpdate(_model);
+            await Database.AddOrUpdate(_model);
         }
         _nav.MoveToUnfinishedBooks();
     }
@@ -72,11 +71,11 @@ public partial class EditBookViewModel: ObservableObject
     }
     public int PagesRead
     {
-        get => _model?.PagesRead ?? 0;
+        get => _model.PagesRead;
         set
         {
             if (_model is null) return;
-            _model.PagesRead = Math.Min(value, PagesTotal);
+            _model.PagesRead = value;
             OnPropertyChanged();
         }
     }
