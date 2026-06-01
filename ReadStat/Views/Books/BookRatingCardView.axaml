@@ -6,5 +6,5 @@
              xmlns:vm="clr-namespace:ReadStat.ViewModels.Books"
              x:DataType="vm:BookRatingCardViewModel"
              x:Class="ReadStat.Views.Books.BookRatingCardView">
-    <TextBlock Text="{Binding Rating}"/>
+    <TextBlock Text="{Binding Rating}" Margin="20"/>
 </UserControl>
