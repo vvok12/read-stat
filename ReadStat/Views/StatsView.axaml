@@ -7,7 +7,7 @@
              xmlns:lvcd="using:LiveChartsCore.Defaults"
              xmlns:draw="using:LiveChartsCore.SkiaSharpView.Drawing.Geometries"
              xmlns:vm="clr-namespace:ReadStat.ViewModels">
-  <Border Padding="8" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" >
+  <Border Padding="8">
     <ScrollViewer>
       <StackPanel>
         <TextBlock Text="Statistics" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 8" />

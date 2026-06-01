@@ -20,7 +20,15 @@
              
     <Application.Styles>
         <FluentTheme />
+
+        <Style Selector="UserControl">
+            <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" />
+        </Style>
         
+        <Style Selector="ContentControl">
+            <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" />
+        </Style>
+
         <Style Selector="Button">
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="Gray"/>
